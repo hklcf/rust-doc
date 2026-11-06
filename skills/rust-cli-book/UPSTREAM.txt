@@ -1,0 +1,4 @@
+repo: https://github.com/rust-cli/book.git
+path: src
+commit: bfb30887e30114d10062cffe5330bd88069922f4
+synced: 2026-11-06 16:42 UTC

@@ -1,0 +1,4 @@
+repo: https://github.com/rust-lang/edition-guide.git
+path: src
+commit: ab8544aeed7b792984366aa122ac19bd47ad9a2f
+synced: 2026-11-06 16:42 UTC

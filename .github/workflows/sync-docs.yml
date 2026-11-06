@@ -1,0 +1,51 @@
+name: sync-docs
+
+on:
+  schedule:
+    - cron: "0 3 * * 1" # 每週一 03:00 UTC
+  workflow_dispatch: {} # Actions 頁手動 "Run workflow"
+
+permissions:
+  contents: write      # push docs-update 分支
+  pull-requests: write # 開 / 更新 PR
+
+concurrency:
+  group: sync-docs
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Sync docs from upstream
+        run: python3 update.py
+
+      - name: Commit and open or update PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "up to date, nothing to sync"
+            exit 0
+          fi
+
+          CHANGED_SKILLS=$(git status --porcelain | cut -c4- | cut -d/ -f2 | sort | uniq | tr '\n' ' ')
+          echo "changed skills: ${CHANGED_SKILLS}"
+
+          BRANCH=docs-update
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add -A
+          git commit -m "sync docs with upstream (${CHANGED_SKILLS})"
+          git push -f origin "$BRANCH"
+
+          OPEN_PRS=$(gh pr list --head "$BRANCH" --state open --json number --jq 'length')
+          if [ "$OPEN_PRS" = "0" ]; then
+            gh pr create --title "docs: sync with upstream" --body "$(printf '自動同步自上游（schedule / workflow_dispatch）。\n\n改動到的 skills: %s\n\n由 .github/workflows/sync-docs.yml 自動產生；merge 後 `git pull` 即得最新文檔。' "$CHANGED_SKILLS")"
+          else
+            echo "PR for $BRANCH already open; branch force-pushed, PR updated automatically"
+          fi
