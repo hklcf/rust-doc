@@ -68,22 +68,23 @@ for d in ~/path/to/rust-doc/skills/*/; do ln -sfn "$d" ~/.config/opencode/skills
 python update.py   # 或 python3 update.py
 ```
 
-腳本會用 depth-1 sparse clone 重新抓取所有上游 repo（約 10 MB），wipe 同重建每個 `skills/<name>/docs/`（`rust-book` 另同步 `listings/`），重新複製上游 `LICENSE-*`，並更新每個 `UPSTREAM.txt`。`rust-error-index` 則由 print.html 即時轉換。
+腳本會用 depth-1 sparse clone 重新抓取所有上游 repo（約 11 MB），wipe 同重建每個 `skills/<name>/docs/`（`rust-book` 另同步 `listings/`），重新複製上游 `LICENSE-*`，並更新每個 `UPSTREAM.txt`。`rust-error-index` 則由 print.html 即時轉換。
 
 ## 自動更新（GitHub Actions）
 
 `.github/workflows/sync-docs.yml` 會喺 **每週一 03:00 UTC** 自動跑 `python3 update.py`（亦可喺 Actions 頁手動「Run workflow」）：
 
 1. 冇上游改動 → 直接結束，唔會郁 main；
-2. 有改動 → force-push 到 `docs-update` 分支，自動開（或更新）一個標題 `docs: sync with upstream` 的 PR，內文列出改動到的 skills；
-3. merge 個 PR 就完成一次更新，唔需要任何額外 secrets（只用預設 `GITHUB_TOKEN`）。
+2. 有改動 → force-push 到 `docs-update` 分支，開（或更新）一個標題 `docs: sync with upstream` 的 PR，內文列出改動到的 skills；
+3. 跟住**自動 squash merge 入 main 並刪除分支**，唔需要任何額外 secrets（只用預設 `GITHUB_TOKEN`）。
 
-注意：呢個 flow **唔會自動 merge**，你 review 由 CI 開嘅 PR 再 merge 就得。junction 安裝（方法二）merge 後 `git pull` 即生效；零複製安裝（方法一）亦然。
+注意：呢個 flow **會自己 merge**，你唔會見到 PR 停留。如果自動 merge 唔成功（main 有衝突、或分支保護要求 review），job 會 fail 並留返個 PR 喺度等你手動處理。junction 安裝（方法二）之後 `git pull` 即生效；零複製安裝（方法一）亦然。
 
 令佢生效前要留意：
 
 - **要先 merge 入 main**：`schedule` 同 `workflow_dispatch` 都只喺 default branch 嘅 workflow 生效。
 - 若 `gh pr create` 報 permission 錯：repo Settings → Actions → General → 勾選 *Allow GitHub Actions to create and approve pull requests*。
+- 自動 merge 需要 `main` 冇 branch protection 擋住；若你有開 required review，就要改成唔自動 merge（見下）。
 - 上游冇改動時，workflow 只會 `git clone` 一輪後以「up to date」結束——即使每個星期一跑都係正常無事。
 
 想改做「有上游改動就 workflow fail 提醒」而非開 PR：將最後一個 step 改成 `exit 1`、刪掉 PR 邏輯即可。

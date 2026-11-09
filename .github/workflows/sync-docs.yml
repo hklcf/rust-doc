@@ -49,3 +49,11 @@ jobs:
           else
             echo "PR for $BRANCH already open; branch force-pushed, PR updated automatically"
           fi
+
+          # 自動 squash merge；GitHub 要幾秒計 mergeability，失敗就重試
+          for i in 1 2 3 4 5 6; do
+            gh pr merge "$BRANCH" --squash --delete-branch && break
+            sleep 5
+          done
+          # 未 merge 成功（例如衝突 / 分支保護要求 review）就留 PR 並令 job 失敗
+          test "$(gh pr list --head "$BRANCH" --state open --json number --jq 'length')" = 0
