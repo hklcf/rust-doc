@@ -1,4 +1,4 @@
 repo: https://github.com/rust-embedded/book.git
 path: src
 commit: 637b4a0244e16ec391a60184ae0c86b550ffc24b
-synced: 2026-11-06 16:42 UTC
+synced: 2026-11-09 10:49 UTC
