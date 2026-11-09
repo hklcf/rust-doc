@@ -1,4 +1,4 @@
 repo: https://github.com/rust-lang/nomicon.git
 path: src
 commit: b0bb569883a3e65ab19d4f1adf1b8dbc1629d0a6
-synced: 2026-11-06 16:42 UTC
+synced: 2026-11-09 10:49 UTC
