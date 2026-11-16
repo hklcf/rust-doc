@@ -514,11 +514,6 @@ The `#[target_feature]` attribute is not allowed on the following places:
 - safe trait methods
 - safe default functions in traits
 
-r[attributes.codegen.target_feature.inline]
-Functions marked with `target_feature` are not inlined into a context that
-does not support the given features. The `#[inline(always)]` attribute may not
-be used with a `target_feature` attribute.
-
 r[attributes.codegen.target_feature.availability]
 ### Available features
 
@@ -892,6 +887,7 @@ Feature               | Implicitly Enables  | Description
 `multivalue`          |                     | [WebAssembly multivalue proposal][multivalue]
 `reference-types`     |                     | [WebAssembly reference-types proposal][reference-types]
 `tail-call`           |                     | [WebAssembly tail-call proposal][tail-call]
+`wide-arithmetic`     |                     | [WebAssembly wide-arithmetic proposal][wide-arithmetic]
 
 [bulk-memory]: https://github.com/WebAssembly/bulk-memory-operations
 [extended-const]: https://github.com/WebAssembly/extended-const
@@ -903,6 +899,7 @@ Feature               | Implicitly Enables  | Description
 [reference-types]: https://github.com/webassembly/reference-types
 [tail-call]: https://github.com/webassembly/tail-call
 [multivalue]: https://github.com/webassembly/multi-value
+[wide-arithmetic]: https://github.com/webassembly/wide-arithmetic
 
 r[attributes.codegen.target_feature.s390x]
 #### `s390x`
