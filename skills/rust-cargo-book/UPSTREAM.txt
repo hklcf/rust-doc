@@ -1,4 +1,4 @@
 repo: https://github.com/rust-lang/cargo.git
 path: doc/book/src
-commit: f93c676e3e7ab1aee08dc95d869700f6b99a1a20
-synced: 2026-11-16 10:27 UTC
+commit: 930a674da900a73c1dfbe16be62c42e75bdfdfc0
+synced: 2026-11-23 11:35 UTC

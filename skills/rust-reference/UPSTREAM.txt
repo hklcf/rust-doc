@@ -1,4 +1,4 @@
 repo: https://github.com/rust-lang/reference.git
 path: src
-commit: bcd62f35e8bf480ec5b0fa569b6d12ea5924030c
-synced: 2026-11-16 10:27 UTC
+commit: c9cc32825b03fc206d9c6fe73e9ca6a2f3576d6c
+synced: 2026-11-23 11:35 UTC

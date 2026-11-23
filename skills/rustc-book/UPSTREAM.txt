@@ -1,4 +1,4 @@
 repo: https://github.com/rust-lang/rust.git
 path: src/doc/rustc/src
-commit: 5fb8a16f5f8244f9fbfe696487a9da223168a6c7
-synced: 2026-11-16 10:27 UTC
+commit: 0259d5e9a81c6af08e40f8c204f2c0c41dca1647
+synced: 2026-11-23 11:35 UTC
