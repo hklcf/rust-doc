@@ -1,4 +1,4 @@
 repo: https://github.com/rust-lang/book.git
 path: src, listings
-commit: 2771df165f092a4fbb9f46b5b2e7450f19010adb
-synced: 2026-11-16 10:27 UTC
+commit: 5c23042f85595490ad9f7412c4c6f57fe0b330d5
+synced: 2026-11-23 11:35 UTC
